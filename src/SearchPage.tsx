@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { debounce } from 'lodash';
-import { useThemeToggle } from '../theme/ThemeProvider';
+import { useThemeToggle } from './theme/ThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
