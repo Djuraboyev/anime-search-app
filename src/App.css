@@ -1,6 +1,6 @@
 body {
   background-color: #121212;
-  color: #f5f5f5;
+  color: #FEE715  ;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
@@ -29,10 +29,10 @@ body {
 }
 
 .anime-card {
-  background-color: #1f1f1f;
+  background-color: #2F3C7E;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px #FBEAEB  (0, 0, 0, 0.4);
   transition: transform 0.3s;
 }
 

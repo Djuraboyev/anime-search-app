@@ -63,12 +63,25 @@ const SearchPage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4 }}>
+    <Container
+      maxWidth="md"
+      sx={{
+        mt: 4,
+        backgroundColor: theme.palette.mode === 'light' ? '#2F3C7E' : '#FBEAEB', 
+        padding: 2,
+        borderRadius: 2,
+      }}
+    >
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-        <IconButton onClick={toggleTheme} color="inherit">
-          {theme.palette.mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
-        </IconButton>
-      </Box>
+  <IconButton onClick={toggleTheme}>
+    {theme.palette.mode === 'light' ? (
+      <DarkModeIcon sx={{ color: '#000' }} />
+    ) : (
+      <LightModeIcon sx={{ color: '#fff' }} />
+    )}
+  </IconButton>
+</Box>
+
 
       <TextField
         label="Search Anime"
@@ -76,6 +89,18 @@ const SearchPage: React.FC = () => {
         fullWidth
         onChange={handleSearchChange}
         placeholder="e.g. Naruto, One Piece..."
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            backgroundColor: theme.palette.mode === 'light' ? '#101820' : '#333',
+            borderColor: theme.palette.mode === 'light' ? '#ccc' : '#666',
+          },
+          '& .MuiInputBase-input': {
+            color: theme.palette.mode === 'light' ? '#000' : '#fff',
+          },
+          '& .MuiInputBase-input::placeholder': {
+            color: theme.palette.mode === 'light' ? '#888' : '#ccc',
+          },
+        }}
       />
 
       <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
