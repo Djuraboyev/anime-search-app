@@ -1,4 +1,3 @@
-// src/theme/ThemeProvider.tsx
 import React, { createContext, useMemo, useState, useContext } from 'react';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
