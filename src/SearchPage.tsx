@@ -19,6 +19,7 @@ import { debounce } from 'lodash';
 import { useThemeToggle } from './theme/ThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import AnimeDetails from "./components/AnimeDetails"; 
 
 const SearchPage: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -26,6 +27,7 @@ const SearchPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [selectedAnimeTitle, setSelectedAnimeTitle] = useState<string | null>(null); 
   const navigate = useNavigate();
   const { toggleTheme } = useThemeToggle();
   const theme = useTheme();
@@ -53,11 +55,11 @@ const SearchPage: React.FC = () => {
 
   const handleSearchChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
-    setPage(1); // reset to first page on new search
+    setPage(1); 
   }, 300);
 
-  const handleCardClick = (id: number) => {
-    navigate(`/anime/${id}`);
+  const handleCardClick = (animeTitle: string) => {
+    setSelectedAnimeTitle(animeTitle); 
   };
 
   return (
@@ -95,7 +97,7 @@ const SearchPage: React.FC = () => {
                 transition: '0.3s',
                 '&:hover': { boxShadow: 6, transform: 'scale(1.03)' },
               }}
-              onClick={() => handleCardClick(anime.mal_id)}
+              onClick={() => handleCardClick(anime.title)} 
             >
               <CardMedia
                 component="img"
@@ -112,6 +114,12 @@ const SearchPage: React.FC = () => {
           </Grid>
         ))}
       </Grid>
+
+      {selectedAnimeTitle && (
+        <Box sx={{ mt: 4 }}>
+          <AnimeDetails animeTitle={selectedAnimeTitle} />
+        </Box>
+      )}
 
       {animeResults.length > 0 && (
         <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
