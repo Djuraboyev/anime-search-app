@@ -7,15 +7,15 @@ const HomePage: React.FC = () => {
     <div className="bg-black text-white min-h-screen">
       <HeroSection />
       <AnimeListSection
-        title="🔥 Популярное"
+        title="🔥 Popular"
         apiUrl="https://api.jikan.moe/v4/top/anime"
       />
       <AnimeListSection
-        title="📈 Сейчас в тренде"
+        title="📈 Now in Trend"
         apiUrl="https://api.jikan.moe/v4/seasons/now"
       />
       <AnimeListSection
-        title="⭐ Топ рейтинга"
+        title="⭐ Top Ranking"
         apiUrl="https://api.jikan.moe/v4/top/anime?filter=favorite"
       />
     </div>

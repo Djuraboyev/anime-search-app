@@ -21,50 +21,57 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
 const SearchPage: React.FC = () => {
-  const [query, setQuery] = useState('');
-  const [animeResults, setAnimeResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const [query, setQuery] = useState(''); // Search input value
+  const [animeResults, setAnimeResults] = useState<any[]>([]); // Search results
+  const [loading, setLoading] = useState(false); // Loading indicator
+  const [page, setPage] = useState(1); // Current page
+  const [totalPages, setTotalPages] = useState(0); // Total pages from API
+
   const navigate = useNavigate();
   const { toggleTheme } = useThemeToggle();
   const theme = useTheme();
 
+  // Fetch anime data from API when query or page changes
   useEffect(() => {
     if (!query) return;
-    setLoading(true);
+
     const fetchAnime = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get(`https://api.jikan.moe/v4/anime`, {
+        const response = await axios.get('https://api.jikan.moe/v4/anime', {
           params: { q: query, page },
         });
         setAnimeResults(response.data.data);
         setTotalPages(response.data.pagination.last_visible_page);
       } catch (error) {
-        console.error('Error fetching anime:', error);
+        console.error('Failed to fetch anime:', error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchAnime();
   }, [query, page]);
 
+  // Handle search input with delay (debounce)
   const handleSearchChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
-    setPage(1);
+    setPage(1); // Reset to first page when new search starts
   }, 300);
 
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default, py: 4 }}>
-      <Container maxWidth="lg" sx={{ maxWidth: '1200px' }}>
+      <Container maxWidth="lg">
+        {/* Theme toggle button */}
         <Box display="flex" justifyContent="flex-end" mb={2}>
           <IconButton onClick={toggleTheme}>
             {theme.palette.mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
           </IconButton>
         </Box>
 
+        {/* Search input */}
         <TextField
-          label="Search Anime"
+          label="Search for anime"
           variant="outlined"
           fullWidth
           onChange={handleSearchChange}
@@ -77,18 +84,21 @@ const SearchPage: React.FC = () => {
           }}
         />
 
+        {/* Show loading spinner */}
         {loading && (
           <Box display="flex" justifyContent="center">
             <CircularProgress />
           </Box>
         )}
 
+        {/* No results message */}
         {!loading && animeResults.length === 0 && query && (
           <Typography variant="h6" align="center" mt={4}>
             No results found for “{query}”
           </Typography>
         )}
 
+        {/* Anime result cards */}
         <Grid container spacing={3} justifyContent="center">
           {animeResults.map((anime) => (
             <Grid item key={anime.mal_id} xs={6} sm={4} md={3} lg={2.4}>
@@ -119,6 +129,7 @@ const SearchPage: React.FC = () => {
           ))}
         </Grid>
 
+        {/* Pagination buttons */}
         {animeResults.length > 0 && (
           <Box mt={4} display="flex" justifyContent="center" gap={2}>
             <Button
