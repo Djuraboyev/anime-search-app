@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Container, CircularProgress, Typography, Button } from '@mui/material';
 
 const DetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [anime, setAnime] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,35 +24,59 @@ const DetailPage: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <CircularProgress />;
+    return <div className="text-center mt-20 text-white">Загрузка...</div>;
   }
 
   if (!anime) {
-    return <Typography variant="h6">Anime not found</Typography>;
+    return <div className="text-center mt-20 text-white">Аниме не найдено</div>;
   }
 
   return (
-    <Container>
-      <Button onClick={() => window.history.back()} variant="outlined">
-        Back to Search
-      </Button>
-      <Typography variant="h3" gutterBottom>
-        {anime.title}
-      </Typography>
-      <img src={anime.images.jpg.large_image_url} alt={anime.title} style={{ maxWidth: '100%' }} />
-      <Typography variant="body1" paragraph>
-        <strong>Synopsis:</strong> {anime.synopsis}
-      </Typography>
-      <Typography variant="body2" color="textSecondary">
-        <strong>Rating:</strong> {anime.rating}
-      </Typography>
-      <Typography variant="body2" color="textSecondary">
-        <strong>Episodes:</strong> {anime.episodes}
-      </Typography>
-      <Typography variant="body2" color="textSecondary">
-        <strong>Premiered:</strong> {anime.premiered}
-      </Typography>
-    </Container>
+    <div className="flex justify-center bg-black text-white py-12 px-4 min-h-screen">
+      <div className="w-full max-w-[1200px] flex flex-col md:flex-row gap-10">
+        {/* POSTER */}
+        <div className="md:w-1/3">
+          <img
+            src={anime.images.jpg.large_image_url}
+            alt={anime.title}
+            className="rounded-lg w-full"
+          />
+          <button
+            onClick={() => navigate(-1)}
+            className="mt-6 w-full bg-gray-800 hover:bg-gray-700 text-white py-2 rounded transition"
+          >
+            Назад
+          </button>
+        </div>
+
+        {/* INFO */}
+        <div className="flex-1 space-y-6">
+          <h1 className="text-4xl font-bold">{anime.title}</h1>
+          <p className="text-gray-300">{anime.synopsis}</p>
+
+          <div className="flex flex-wrap gap-4">
+            <div className="w-[150px] bg-gray-800 p-4 rounded">
+              <p className="text-sm text-gray-400">Score</p>
+              <p className="text-xl font-bold">{anime.score ?? 'N/A'}</p>
+            </div>
+            <div className="w-[150px] bg-gray-800 p-4 rounded">
+              <p className="text-sm text-gray-400">Popularity</p>
+              <p className="text-xl font-bold">{anime.popularity}</p>
+            </div>
+            <div className="w-[150px] bg-gray-800 p-4 rounded">
+              <p className="text-sm text-gray-400">Members</p>
+              <p className="text-xl font-bold">{anime.members}</p>
+            </div>
+          </div>
+
+          <div className="text-sm text-gray-400 space-y-2 pt-4">
+            <p><strong>Episodes:</strong> {anime.episodes}</p>
+            <p><strong>Premiered:</strong> {anime.season} {anime.year}</p>
+            <p><strong>Rating:</strong> {anime.rating}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

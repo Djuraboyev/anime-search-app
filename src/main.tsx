@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';  
-import App from './App';  
-import { BrowserRouter as Router } from 'react-router-dom';  
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './App';
+import './index.css'; // TailwindCSS
 
-//html
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <Router>
-    <App />
-  </Router>
+  <React.StrictMode>
+    <Router>
+      <App />
+    </Router>
+  </React.StrictMode>
 );
