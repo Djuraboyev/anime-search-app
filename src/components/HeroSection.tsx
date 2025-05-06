@@ -1,31 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Box, Typography, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/anime/1'); 
+  };
+
   return (
-    <div
-      className="relative h-64 md:h-96 bg-cover bg-center"
-      style={{
-        backgroundImage: `url('https://cdn.myanimelist.net/images/anime/1764/126627l.jpg')`,
+    <Box
+      sx={{
+        backgroundImage: 'url(https://example.com/banner.jpg)', 
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '400px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#fff',
+        textAlign: 'center',
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-center px-4">
-        <div>
-          <h1 className="text-white text-3xl md:text-5xl font-bold mb-4">
-            Добро пожаловать в AnimeZone
-          </h1>
-          <p className="text-white mb-6 text-sm md:text-base">
-            Исследуйте лучшие аниме прямо сейчас
-          </p>
-          <Link
-            to="/anime/1"
-            className="inline-block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-sm md:text-base"
-          >
-            Смотреть сейчас
-          </Link>
-        </div>
-      </div>
-    </div>
+      <Box>
+        <Typography variant="h3" gutterBottom>
+         Welcome to Anime Search App
+        </Typography>
+        <Button variant="contained" color="primary" onClick={handleClick}>
+          More Details
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

@@ -25,7 +25,7 @@ const AnimeListSection: React.FC<Props> = ({ title, apiUrl }) => {
         const res = await axios.get(apiUrl);
         setAnimeList(res.data.data);
       } catch (err) {
-        console.error('Ошибка загрузки:', err);
+        console.error('Mistake in Downloading:', err);
       }
     };
 

@@ -9,7 +9,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ animes }) => {
   const [selectedAnime, setSelectedAnime] = useState<Anime | null>(null);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full p-4">
       {animes.map((anime) => (
         <div
           key={anime.mal_id}
@@ -21,7 +21,7 @@ const AnimeList: React.FC<AnimeListProps> = ({ animes }) => {
             alt={anime.title}
             className="w-full h-60 object-cover rounded"
           />
-          <h2 className="text-white text-sm mt-2">
+          <h2 className="text-white text-sm mt-2 text-center">
             {anime.title.length > 30 ? anime.title.slice(0, 30) + '...' : anime.title}
           </h2>
         </div>

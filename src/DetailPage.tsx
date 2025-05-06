@@ -29,7 +29,7 @@ const DetailPage: React.FC = () => {
     fetchAnime();
   }, [id]);
 
-  if (!anime) return <div className="text-white p-4">Загрузка...</div>;
+  if (!anime) return <div className="text-white p-4">Downloading...</div>;
 
   return (
     <div className="p-4 text-white bg-black min-h-screen">
