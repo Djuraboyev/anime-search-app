@@ -7,7 +7,24 @@
     <title>Vite + React + TS</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div
+  key={anime.mal_id}
+  onClick={() => setSelectedAnime(anime)}
+  className="bg-[#1e1e4b] rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer"
+>
+  <img
+    src={anime.images.jpg.image_url}
+    alt={anime.title}
+    className="w-full h-60 object-cover rounded-t-lg"
+  />
+  <div className="p-2">
+    <h2 className="text-white text-sm text-center font-medium">
+      {anime.title.length > 30 ? anime.title.slice(0, 30) + '...' : anime.title}
+    </h2>
+  </div>
+</div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
