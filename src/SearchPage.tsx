@@ -10,8 +10,8 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  Container,
   IconButton,
+  Container,
   useTheme,
 } from '@mui/material';
 import axios from 'axios';
@@ -19,7 +19,6 @@ import { debounce } from 'lodash';
 import { useThemeToggle } from './theme/ThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import AnimeDetails from './components/AnimeDetails';
 
 const SearchPage: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -27,7 +26,6 @@ const SearchPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [selectedAnimeTitle, setSelectedAnimeTitle] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toggleTheme } = useThemeToggle();
   const theme = useTheme();
@@ -35,7 +33,6 @@ const SearchPage: React.FC = () => {
   useEffect(() => {
     if (!query) return;
     setLoading(true);
-
     const fetchAnime = async () => {
       try {
         const response = await axios.get(`https://api.jikan.moe/v4/anime`, {
@@ -49,7 +46,6 @@ const SearchPage: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchAnime();
   }, [query, page]);
 
@@ -58,14 +54,10 @@ const SearchPage: React.FC = () => {
     setPage(1);
   }, 300);
 
-  const handleCardClick = (animeTitle: string) => {
-    setSelectedAnimeTitle(animeTitle);
-  };
-
   return (
-    <Box sx={{ backgroundColor: theme.palette.mode === 'light' ? '#f5f5f5' : '#121212', minHeight: '100vh', py: 4 }}>
-      <Container maxWidth="lg" sx={{ maxWidth: '1200px !important' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+    <Box sx={{ backgroundColor: theme.palette.background.default, py: 4 }}>
+      <Container maxWidth="lg" sx={{ maxWidth: '1200px' }}>
+        <Box display="flex" justifyContent="flex-end" mb={2}>
           <IconButton onClick={toggleTheme}>
             {theme.palette.mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
           </IconButton>
@@ -78,58 +70,57 @@ const SearchPage: React.FC = () => {
           onChange={handleSearchChange}
           placeholder="e.g. Naruto, One Piece..."
           sx={{
+            input: { color: theme.palette.mode === 'light' ? '#000' : '#fff' },
+            backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#333',
+            borderRadius: 1,
             mb: 4,
-            backgroundColor: theme.palette.background.paper,
-            input: { color: theme.palette.text.primary },
           }}
         />
 
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        {loading && (
+          <Box display="flex" justifyContent="center">
             <CircularProgress />
           </Box>
-        ) : animeResults.length === 0 && query ? (
-          <Typography variant="h6" align="center" sx={{ mt: 4 }}>
+        )}
+
+        {!loading && animeResults.length === 0 && query && (
+          <Typography variant="h6" align="center" mt={4}>
             No results found for “{query}”
           </Typography>
-        ) : (
-          <Grid container spacing={3}>
-            {animeResults.map((anime) => (
-              <Grid item key={anime.mal_id} xs={12} sm={6} md={3}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    cursor: 'pointer',
-                    transition: '0.3s',
-                    '&:hover': { boxShadow: 6, transform: 'scale(1.03)' },
-                  }}
-                  onClick={() => handleCardClick(anime.title)}
-                >
-                  <CardMedia
-                    component="img"
-                    height="350"
-                    image={anime.images.jpg.image_url}
-                    alt={anime.title}
-                  />
-                  <CardContent>
-                    <Typography variant="subtitle1" noWrap>
-                      {anime.title}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
         )}
 
-        {selectedAnimeTitle && (
-          <Box sx={{ mt: 4 }}>
-            <AnimeDetails animeTitle={selectedAnimeTitle} />
-          </Box>
-        )}
+        <Grid container spacing={3} justifyContent="center">
+          {animeResults.map((anime) => (
+            <Grid item key={anime.mal_id} xs={6} sm={4} md={3} lg={2.4}>
+              <Card
+                sx={{
+                  cursor: 'pointer',
+                  transition: '0.3s',
+                  '&:hover': { transform: 'scale(1.05)', boxShadow: 6 },
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+                onClick={() => navigate(`/anime/${anime.mal_id}`)}
+              >
+                <CardMedia
+                  component="img"
+                  image={anime.images.jpg.image_url}
+                  alt={anime.title}
+                  height="320"
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle2" noWrap>
+                    {anime.title}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
 
         {animeResults.length > 0 && (
-          <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', gap: 2 }}>
+          <Box mt={4} display="flex" justifyContent="center" gap={2}>
             <Button
               variant="contained"
               disabled={page <= 1}
