@@ -1,18 +1,11 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Typography, TextField } from '@mui/material';
 
 const HeroSection: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/anime/1'); 
-  };
-
   return (
     <Box
       sx={{
-        backgroundImage: 'url(https://example.com/banner.jpg)', 
+        backgroundImage: 'url(https://wallpapercave.com/wp/wp5128398.jpg)', 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '400px',
@@ -21,18 +14,28 @@ const HeroSection: React.FC = () => {
         justifyContent: 'center',
         color: '#fff',
         textAlign: 'center',
+        flexDirection: 'column',
       }}
     >
-      <Box>
-        <Typography variant="h3" gutterBottom>
-         Welcome to Anime Search App
-        </Typography>
-        <Button variant="contained" color="primary" onClick={handleClick}>
-          More Details
-        </Button>
-      </Box>
+      <Typography variant="h3" gutterBottom>
+        Welcome to Anime Search App
+      </Typography>
+      <TextField
+        placeholder="Search anime..."
+        variant="outlined"
+        InputProps={{
+          sx: {
+            width: '1200px',
+            maxWidth: '100%',
+            backgroundColor: '#fff',
+            color: '#000',
+            input: { color: '#000' }, 
+          },
+        }}
+      />
     </Box>
   );
 };
 
 export default HeroSection;
+
