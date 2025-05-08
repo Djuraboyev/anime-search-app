@@ -11,6 +11,8 @@ The goal of this app is to search for anime using the [Jikan API](https://docs.a
 ## 📸 Screenshots
 
 > Add screenshots or a GIF here if you want to show off your UI.
+![image](https://github.com/user-attachments/assets/78c4ff6e-e8b2-4a9d-bd2f-ac1e5e38c3d0)
+
 
 ## 🧩 Features
 
