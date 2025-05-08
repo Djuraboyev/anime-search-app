@@ -3,11 +3,6 @@
 This is a mini project built for the Frontend Developer application at **YoPrint**.  
 The goal of this app is to search for anime using the [Jikan API](https://docs.api.jikan.moe/) and display the results with pagination and detail pages.
 
-## 🚀 Live Demo
-
-[Click here to view the app online](https://your-vercel-or-netlify-link.com)  
-*(Replace this with your deployed URL)*
-
 ## 📸 Screenshots
 
 > Add screenshots or a GIF here if you want to show off your UI.
