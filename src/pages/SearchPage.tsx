@@ -18,7 +18,6 @@ import axios from 'axios';
 import { useThemeToggle } from '../theme/ThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import debounce from 'lodash.debounce';
 
 const SearchPage: React.FC = () => {
   const [input, setInput] = useState('');
@@ -52,18 +51,6 @@ const SearchPage: React.FC = () => {
     fetchAnime();
   }, [query, page]);
 
-  useEffect(() => {
-    const debounced = debounce(() => {
-      if (input.trim()) {
-        setQuery(input);
-        setPage(1);
-      }
-    }, 300);
-
-    debounced();
-    return () => debounced.cancel();
-  }, [input]);
-
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default, py: 4 }}>
       <Container maxWidth="lg">
@@ -79,6 +66,12 @@ const SearchPage: React.FC = () => {
           fullWidth
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && input.trim()) {
+              setQuery(input);
+              setPage(1);
+            }
+          }}
           placeholder="e.g. Naruto, One Piece..."
           sx={{
             input: { color: theme.palette.mode === 'light' ? '#000' : '#fff' },
@@ -91,9 +84,9 @@ const SearchPage: React.FC = () => {
         <Typography
           variant="h5"
           sx={{
-            color: '#000',
+            color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.12)',
             fontWeight: 'bold',
-            backgroundColor: 'rgba(255,255,255,0.7)',
+            backgroundColor: theme.palette.mode === 'light' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.4)',
             display: 'inline-block',
             p: 1,
             borderRadius: 1,

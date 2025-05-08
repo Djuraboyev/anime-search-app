@@ -4,7 +4,7 @@ import AnimeListSection from '../components/AnimeListSection';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className="bg-black text-blue min-h-screen">
       <HeroSection />
       <AnimeListSection
         title="🔥 Popular"
