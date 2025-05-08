@@ -1,42 +1,50 @@
-Two official plugins are available:
+# Anime Search App 🎌
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is a mini project built for the Frontend Developer application at **YoPrint**.  
+The goal of this app is to search for anime using the [Jikan API](https://docs.api.jikan.moe/) and display the results with pagination and detail pages.
 
-## Expanding the ESLint configuration
+## 🚀 Live Demo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+[Click here to view the app online](https://your-vercel-or-netlify-link.com)  
+*(Replace this with your deployed URL)*
 
-```js
-export default tseslint.config({
-  extends: [
-    ...tseslint.configs.recommendedTypeChecked,
-    ...tseslint.configs.strictTypeChecked,
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📸 Screenshots
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> Add screenshots or a GIF here if you want to show off your UI.
 
-```js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧩 Features
 
-export default tseslint.config({
-  plugins: {
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- 🔍 Instant anime search with **debounced input**
+- 📄 Anime **details page**
+- 📚 **Pagination** with server-side data
+- ⚡ Built using **React 18**, **TypeScript**, and **Tailwind CSS**
+- 🎨 Clean and responsive UI
+- 🚦 Error and loading state handling
+- ✅ Follows modern React standards with hooks and functional components
+
+## 🔧 Tech Stack
+
+- React 18
+- TypeScript (optional, included here)
+- Vite
+- Tailwind CSS
+- React Router DOM
+- Axios
+- Jikan REST API (v4)
+
+## 📁 Project Structure
+src/
+├── components/ # Reusable UI components
+├── pages/ # Page components (Home, Details)
+├── api/ # API request functions
+├── types/ # Type definitions
+├── App.tsx # Routing logic
+└── main.tsx # App entry point
+
+## ⚙️ Setup & Run Locally
+
+```bash
+git clone https://github.com/Djuraboyev/anime-search-app.git
+cd anime-search-app
+npm install
+npm run dev
