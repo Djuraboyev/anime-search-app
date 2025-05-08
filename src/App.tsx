@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import SearchPage from './SearchPage';
-import DetailPage from './DetailPage';
-import HomePage from './HomePage';
+import SearchPage from './pages/SearchPage';
+import DetailPage from './pages/DetailPage';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (

@@ -5,14 +5,15 @@ const HeroSection: React.FC = () => {
   return (
     <Box
       sx={{
-        backgroundImage: 'url(https://wallpapercave.com/wp/wp5128398.jpg)', 
+        backgroundImage: 'url(https://wallpapercave.com/wp/wp5128398.jpg)',
+        backgroundImage: 'url(https://wallpapercave.com/wp/wp4089702.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         height: '400px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#fff',
+        color: '#000',
         textAlign: 'center',
         flexDirection: 'column',
       }}

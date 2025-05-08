@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AnimeCard from './AnimeCard';
+import { Grid, Typography, Box } from '@mui/material';
 
 interface Anime {
   mal_id: number;
@@ -25,7 +26,7 @@ const AnimeListSection: React.FC<Props> = ({ title, apiUrl }) => {
         const res = await axios.get(apiUrl);
         setAnimeList(res.data.data);
       } catch (err) {
-        console.error('Mistake in Downloading:', err);
+        console.error('Ошибка загрузки:', err);
       }
     };
 
@@ -33,20 +34,23 @@ const AnimeListSection: React.FC<Props> = ({ title, apiUrl }) => {
   }, [apiUrl]);
 
   return (
-    <div className="px-4 py-6">
-      <h2 className="text-2xl text-white font-bold mb-3">{title}</h2>
-      <div className="flex gap-4 overflow-x-auto">
-        {animeList.map(anime => (
-          <AnimeCard
-            key={anime.mal_id}
-            id={anime.mal_id}
-            title={anime.title}
-            imageUrl={anime.images.jpg.image_url}
-            rating={anime.score}
-          />
+    <Box px={4} py={6}>
+      <Typography variant="h5" color="white" fontWeight="bold" mb={3}>
+        {title}
+      </Typography>
+      <Grid container spacing={2}>
+        {animeList.map((anime) => (
+          <Grid item key={anime.mal_id} xs={12} sm={6} md={4} lg={3} xl={2}>
+            <AnimeCard
+              id={anime.mal_id}
+              title={anime.title}
+              imageUrl={anime.images.jpg.image_url}
+              rating={anime.score}
+            />
+          </Grid>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   );
 };
 

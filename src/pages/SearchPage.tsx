@@ -15,52 +15,58 @@ import {
   useTheme,
 } from '@mui/material';
 import axios from 'axios';
-import { debounce } from 'lodash';
-import { useThemeToggle } from './theme/ThemeProvider';
+import { useThemeToggle } from '../theme/ThemeProvider';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import debounce from 'lodash.debounce';
 
 const SearchPage: React.FC = () => {
-  const [query, setQuery] = useState(''); 
-  const [animeResults, setAnimeResults] = useState<any[]>([]); 
-  const [loading, setLoading] = useState(false); 
+  const [input, setInput] = useState('');
+  const [query, setQuery] = useState('');
+  const [animeResults, setAnimeResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0); 
+  const [totalPages, setTotalPages] = useState(0);
 
   const navigate = useNavigate();
   const { toggleTheme } = useThemeToggle();
   const theme = useTheme();
 
-  useEffect(() => {
+  const fetchAnime = async () => {
     if (!query) return;
+    setLoading(true);
+    try {
+      const response = await axios.get('https://api.jikan.moe/v4/anime', {
+        params: { q: query, page },
+      });
+      setAnimeResults(response.data.data);
+      setTotalPages(response.data.pagination.last_visible_page);
+    } catch (error) {
+      console.error('Failed to fetch anime:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchAnime = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get('https://api.jikan.moe/v4/anime', {
-          params: { q: query, page },
-        });
-        setAnimeResults(response.data.data);
-        setTotalPages(response.data.pagination.last_visible_page);
-      } catch (error) {
-        console.error('Failed to fetch anime:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchAnime();
   }, [query, page]);
 
-  const handleSearchChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-    setPage(1); 
-  }, 300);
+  useEffect(() => {
+    const debounced = debounce(() => {
+      if (input.trim()) {
+        setQuery(input);
+        setPage(1);
+      }
+    }, 300);
+
+    debounced();
+    return () => debounced.cancel();
+  }, [input]);
 
   return (
     <Box sx={{ backgroundColor: theme.palette.background.default, py: 4 }}>
       <Container maxWidth="lg">
-
         <Box display="flex" justifyContent="flex-end" mb={2}>
           <IconButton onClick={toggleTheme}>
             {theme.palette.mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
@@ -71,7 +77,8 @@ const SearchPage: React.FC = () => {
           label="Search for anime"
           variant="outlined"
           fullWidth
-          onChange={handleSearchChange}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="e.g. Naruto, One Piece..."
           sx={{
             input: { color: theme.palette.mode === 'light' ? '#000' : '#fff' },
@@ -80,6 +87,21 @@ const SearchPage: React.FC = () => {
             mb: 4,
           }}
         />
+
+        <Typography
+          variant="h5"
+          sx={{
+            color: '#000',
+            fontWeight: 'bold',
+            backgroundColor: 'rgba(255,255,255,0.7)',
+            display: 'inline-block',
+            p: 1,
+            borderRadius: 1,
+            mb: 2,
+          }}
+        >
+          🔥 Popular
+        </Typography>
 
         {loading && (
           <Box display="flex" justifyContent="center">
